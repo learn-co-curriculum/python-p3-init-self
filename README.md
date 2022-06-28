@@ -332,6 +332,8 @@ optional <code>end</code> argument.</p>
 </details>
 <br/>
 
+***
+
 ## Instructions
 
 Fork and clone the lab and run the tests with `pytest -x`.
