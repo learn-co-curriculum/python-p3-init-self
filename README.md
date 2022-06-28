@@ -43,6 +43,22 @@ We know from their IDs that `fido` and `snoopy` live in different locations
 in memory, but their _behavior_ is identical. We don't provide them any unique
 methods or attributes in the code above.
 
+We can modify their attributes using dot notation as follows:
+
+```py
+fido.breed = "Dalmatian"
+snoopy.breed = "Beagle"
+
+fido.breed
+# Dalmatian
+snoopy.breed
+# Beagle
+```
+
+...but dogs are _born_ with breeds, not assigned breeds later on. To provide
+objects with unique attributes upon instantiation, we use the `__init__`
+method.
+
 ***
 
 ## `__init__`
@@ -87,13 +103,9 @@ class Dog:
 
 fido = Dog("Fido")
 # Fido is born!
-fido.bark()
-# Woof!
 
 snoopy = Dog("Snoopy")
 # Snoopy is born!
-snoopy.bark()
-# Woof!
 ```
 
 ***
@@ -128,7 +140,6 @@ as `fido`! As a matter of fact, it _is_ `fido`!
 
 ```py
 fido is fido.showing_self()
-# <__main__.Dog object at 0x104f8bfa0>
 # True
 ```
 
@@ -161,49 +172,64 @@ fido.showingThis();
 
 ***
 
-## Operating on `self` in an Instance Method
+## `__init__` and `self` Together
 
-Let's say that Fido here is getting adopted. Fido's new owner is Sophie. Let's
-write an `attr_accessor` on our `Dog` for the owner attribute.
+Now that we know that `__init__` contains code that runs whenever we initialize
+a new object and that the `self` that is passed to each method is a reference
+to the initialized object, let's make some unique dogs:
 
-```rb
-class Dog
-  attr_accessor :name, :owner
+```py
+class Dog:
+    def __init__(self, name):
+        self.name = name
 
-  def initialize(name)
-    @name = name
-  end
+    def bark(self):
+        print("Woof!")
 
-end
+fido = Dog("Fido")
+fido.name
+# Fido
+
+snoopy = Dog("Snoopy")
+snoopy.name
+# Snoopy
 ```
 
-Now we can set Fido's `owner` attribute equal to the string of `"Sophie"`. The
+***
+
+## Operating on `self` in an Instance Method
+
+Let's say that Fido here is getting adopted. Fido's new owner is Sophie.
+We can set Fido's `owner` attribute equal to the string of `"Sophie"`. The
 name of his new owner:
 
-```rb
+```py
+class Dog
+  def __init__(self, name)
+    self.name = name
+
 fido.owner = "Sophie"
 
 fido.owner
-# => "Sophie"
+# "Sophie"
 ```
 
 Great, Fido now knows the name of his owner. Let's think about the situation in
 which `fido` gets a new owner. This would occur at the moment in which `fido` is
 adopted.
 
-To represent this with code, we could write an `#adopted` method like this:
+To represent this with code, we could write an `adopt()` method like this:
 
-```rb
-def adopted(dog, owner_name)
-  dog.owner = owner_name
-end
+```py
+def adopt(dog, owner_name)
+    dog.owner = owner_name
 ```
 
 Here we have a method that takes in two arguments, an instance of the `Dog`
 class and an owner's name. We could call our method like this:
 
-```rb
-adopted(fido, "Sophie")
+```py
+adopt(fido, "Sophie")
 
 # now we can ask Fido who his owner is:
 
@@ -213,69 +239,112 @@ fido.owner
 
 However, the beauty of object-oriented programming is that we can encapsulate,
 or wrap up, attributes and behaviors into one object. Instead of writing a
-method that is not associated to any particular object and that takes in certain
-objects as arguments, we can simply teach our `Dog` instances how to get
+function that is not associated to any particular object and that takes in
+certain objects as arguments, we can simply teach our `Dog` instances how to get
 adopted.
 
 Let's refactor our code above into an instance method on the `Dog` class.
 
-```rb
+```py
 class Dog
-  attr_accessor :name, :owner
+    def __init__(name)
+        self.name = name
 
-  def initialize(name)
-    @name = name
-  end
+    def bark
+        print("Woof!")
 
-  def bark
-    "Woof!"
-  end
-
-  def get_adopted(owner_name)
-    self.owner = owner_name
-  end
-
-end
+    def get_adopted(self, owner_name)
+        self.owner = owner_name
 ```
 
-Here, we use the `self` keyword inside of the `#get_adopted` instance method to
-refer to whichever dog this method is being called on. We set that dog's `owner`
-property equal to the new owner's name by calling the `#owner=` method on `self`
-inside the method body.
+Here, we use the `self` keyword inside of the `get_adopted()` instance method
+to refer to whichever dog this method is being called on. We set that dog's
+owner equal to `owner_name` just as we would assign any other variable!
 
 Think about it: if `self` **refers to the object on which the method is being
 called**, and if that object is an instance of the `Dog` class, then we can call
 any of our other instance methods on `self`.
 
-Here's how we'd use the `#get_adopted` method:
+Here's how we'd use the `get_adopted()` method:
 
-```rb
-fido = Dog.new("Fido")
+```py
+fido = Dog("Fido")
 fido.get_adopted("Sophie")
 fido.owner
-# => "Sophie"
+# "Sophie"
+```
+
+***
+
+## Optional `__init__` Arguments
+
+There are a number of things that are important to know about a dog that you're
+planning to adopt. Age, weight, breed, and many more attributes factor into
+whether they're a good fit for you and your home. Other things, like favorite
+toys, are not quite so important.
+
+To accommodate these less important details, Python lets us set default values
+for arguments in any method or function. Let's see how we would prepare an
+optional `favorite_toy` argument:
+
+```py
+class Dog:
+    def __init__(self, name, favorite_toy="Any")
+        self.name = name
+        self.favorite_toy = favorite_toy
+
+fido = Dog("Fido")
+fido.favorite_toy
+# Any
+
+snoopy = Dog("Snoopy", "Tennis Ball")
+snoopy.favorite_toy
+# Tennis Ball
+```
+
+Do note, however, that arguments without default values are _not_ optional:
+
+```py
+old_yeller = Dog()
+# TypeError: __init__() missing 1 required positional argument: 'name'
 ```
 
 ## Instructions
 
-Complete the following tasks to get the rest of the tests passing:
+Fork and clone the lab and run the tests with `learn test`.
 
-1. Add an instance method `sit()` to your `Dog` class that will print "The dog
-is sitting."
-2. Define a `Person` class in `lib/person.py`
-3. Add an instance method `talk()` to your Person class that will print "Hello World!"
-4. Add an instance method `walk()` to your Person class that will print "The
-person is walking."
+### 1. `Person.__init__` with a Name
+
+Define a `Person` class in `lib/person.py`. In the class, define an
+`__init__` method that accepts an argument for the person's name. That
+argument should be stored within a `self.name` attribute.
+
+### 2. `Dog.__init__` with Name and Breed defaulting to "Mutt"
+
+Define a `Dog` class in `lib/dog.py`. In the class, define an `__init__`
+method that accepts an argument for the dog's name. That argument should be
+stored within a `self.name` attribute.
+
+Additionally, `Dog.__init__` should accept a second _optional_ argument for
+the dog's breed stored in an attribute `self.breed`. When no breed is provided,
+it should default to "Mutt".
+
+***
 
 ## Conclusion
 
-With all tests passing, you have successfully written multiple instance methods
-and _two_ different classes!
+In Python, when we use `self` keyword in an **instance method**, `self` refers
+to whatever instance that method was called on. It's like a special variable
+that changes meaning depending on the context. Using `self` in conjunction with
+`__init__` allows us to create objects and set their most important attributes
+in one line of code. This also ensures that any objects of one class always
+contain the data that they need to be useful later on.
 
-The ability to define methods and behaviors in our classes for our instances
-makes Python classes behave not just as factories, capable of instantiating new
-individual instances, but also as a blueprint, defining what those instances
-can do.
+This concept of our objects being self-aware is key to our ability to write
+object-oriented code. It may take some time to familiarize yourself with this
+concept, and that's ok! Just make sure to test out your code, and find ways to
+determine what `self` is (like using `ipdb.set_trace()`) if you're ever not
+sure.
 
 ***
 
