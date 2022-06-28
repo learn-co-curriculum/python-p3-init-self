@@ -311,7 +311,7 @@ old_yeller = Dog()
 
 ## Instructions
 
-Fork and clone the lab and run the tests with `learn test`.
+Fork and clone the lab and run the tests with `pytest -x`.
 
 ### 1. `Person.__init__` with a Name
 
@@ -350,8 +350,6 @@ sure.
 
 ## Resources
 
-- [Python documentation][python docs]
-- [Instance method in Python](https://www.geeksforgeeks.org/instance-method-in-python/)
-- [Method Objects](https://docs.python.org/3/tutorial/classes.html#method-objects)
-
-[python docs]: https://docs.python.org/3/
+- [__init__ in Python](https://www.geeksforgeeks.org/__init__-in-python/)
+- [Python self](https://www.w3schools.com/python/gloss_python_self.asp)
+- [What do __init__ and self do in Python?](https://stackoverflow.com/questions/625083/what-do-init-and-self-do-in-python)
