@@ -20,6 +20,8 @@ class's `__init__()` method is called.
 interchangeably.
 - **Function**: a series of steps that create, transform, and move data.
 - **Method**: a function that is defined inside of a class.
+- **self**: a keyword reference to the current instance of the class that is
+used to access attributes of the instance.
 - **Attribute**: variables that belong to an object.
 
 ***
@@ -107,6 +109,15 @@ fido = Dog("Fido")
 snoopy = Dog("Snoopy")
 # Snoopy is born!
 ```
+
+<details><summary><em>When is the __init__ magic method run?</em></summary>
+<p>
+
+<h3>When an object is instantiated.</h3>
+
+</p>
+</details>
+<br/>
 
 ***
 
@@ -218,7 +229,7 @@ Great, Fido now knows the name of his owner. Let's think about the situation in
 which `fido` gets a new owner. This would occur at the moment in which `fido` is
 adopted.
 
-To represent this with code, we could write an `adopt()` method like this:
+To represent this with code, we could write an `adopt()` function like this:
 
 ```py
 def adopt(dog, owner_name)
@@ -308,6 +319,18 @@ Do note, however, that arguments without default values are _not_ optional:
 old_yeller = Dog()
 # TypeError: __init__() missing 1 required positional argument: 'name'
 ```
+
+<details><summary><em>Can functions have optional arguments too?</em></summary>
+<p>
+
+<h3>Yes!</h3>
+<p>Aside from the <code>self</code> keyword, functions and methods are
+identical.</p>
+<p>One of the most common Python functions, <code>print()</code>, has an
+optional <code>end</code> argument.</p>
+</p>
+</details>
+<br/>
 
 ## Instructions
 
