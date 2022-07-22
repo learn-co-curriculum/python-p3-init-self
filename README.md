@@ -337,13 +337,7 @@ optional <code>end</code> argument.</p>
 
 Fork and clone the lab and run the tests with `pytest -x`.
 
-### 1. `Person.__init__` with a Name
-
-Define a `Person` class in `lib/person.py`. In the class, define an
-`__init__` method that accepts an argument for the person's name. That
-argument should be stored within a `self.name` attribute.
-
-### 2. `Dog.__init__` with Name and Breed defaulting to "Mutt"
+### 1. `Dog.__init__` with Name and Breed defaulting to "Mutt"
 
 Define a `Dog` class in `lib/dog.py`. In the class, define an `__init__`
 method that accepts an argument for the dog's name. That argument should be
@@ -352,6 +346,12 @@ stored within a `self.name` attribute.
 Additionally, `Dog.__init__` should accept a second _optional_ argument for
 the dog's breed stored in an attribute `self.breed`. When no breed is provided,
 it should default to "Mutt".
+
+### 2. `Person.__init__` with a Name
+
+Define a `Person` class in `lib/person.py`. In the class, define an
+`__init__` method that accepts an argument for the person's name. That
+argument should be stored within a `self.name` attribute.
 
 ***
 
