@@ -216,7 +216,7 @@ name of his new owner:
 
 ```py
 class Dog
-  def __init__(self, name)
+  def __init__(self, name):
     self.name = name
 
 fido.owner = "Sophie"
@@ -232,7 +232,7 @@ adopted.
 To represent this with code, we could write an `adopt()` function like this:
 
 ```py
-def adopt(dog, owner_name)
+def adopt(dog, owner_name):
     dog.owner = owner_name
 ```
 
@@ -258,13 +258,13 @@ Let's refactor our code above into an instance method on the `Dog` class.
 
 ```py
 class Dog
-    def __init__(name)
+    def __init__(self, name):
         self.name = name
 
-    def bark
+    def bark(self):
         print("Woof!")
 
-    def get_adopted(self, owner_name)
+    def get_adopted(self, owner_name):
         self.owner = owner_name
 ```
 
@@ -300,7 +300,7 @@ optional `favorite_toy` argument:
 
 ```py
 class Dog:
-    def __init__(self, name, favorite_toy="Any")
+    def __init__(self, name, favorite_toy="Any"):
         self.name = name
         self.favorite_toy = favorite_toy
 
@@ -328,7 +328,6 @@ old_yeller = Dog()
 identical.</p>
 <p>One of the most common Python functions, <code>print()</code>, has an
 optional <code>end</code> argument.</p>
-</p>
 </details>
 <br/>
 
