@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib.person import Person
+from person import Person
 
 class TestPerson:
     '''Person in person.py'''
