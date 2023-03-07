@@ -215,7 +215,7 @@ We can set Fido's `owner` attribute equal to the string of `"Sophie"`. The
 name of his new owner:
 
 ```py
-class Dog
+class Dog:
   def __init__(self, name):
     self.name = name
 
@@ -257,7 +257,7 @@ adopted.
 Let's refactor our code above into an instance method on the `Dog` class.
 
 ```py
-class Dog
+class Dog:
     def __init__(self, name):
         self.name = name
 
